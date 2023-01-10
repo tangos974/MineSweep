@@ -1,0 +1,3 @@
+Final screen that shows which mine killed player with 'X';
+
+GUI
