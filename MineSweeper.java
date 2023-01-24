@@ -8,7 +8,7 @@ import java.util.*;
  * tutorialflow.com
  * The coding train on YouTube
  *
- * Author: Tanguy Frémont
+ * Author: Tangos974
  */
 
 public class MineSweeper {	
@@ -32,8 +32,8 @@ public class MineSweeper {
 
 	public void startGame(int mineNumber, int boardWidth, int boardHeight){
 
-		GameBoard board = new GameBoard(boardWidth, boardHeight, mineNumber);
-		//GameBoard board = new GameBoard();
+		//GameBoard board = new GameBoard(boardWidth, boardHeight, mineNumber);
+		GameBoard board = new GameBoard();
 
 		boolean inGame = true;
 		while(inGame){

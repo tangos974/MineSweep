@@ -1,1 +1,10 @@
-GUI
+GUI:
+- Menu:
+	- File:
+		- New Game
+		- Save Game
+	- View
+
+Online version?
+
+
