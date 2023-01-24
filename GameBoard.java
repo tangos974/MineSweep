@@ -5,15 +5,25 @@ public class GameBoard{
 	int[][] gameBoard;
 	int[][] playerBoard;
 
+	int boardWidth;
+	int boardHeight;
+
 	public GameBoard(){
 		this(10, 10, 10);
 	}
 
 
-	public GameBoard(int boardWidth, int boardHeight, int minesNbr){
+	Scanner sc = new Scanner(System.in);
+
+
+	public GameBoard(int width, int height, int minesNbr){
+		
+		this.boardWidth = width;
+		this.boardHeight = height;
 
 		this.gameBoard = new int[boardWidth][boardHeight];
 		this.playerBoard = new int[boardWidth][boardHeight];
+
 		int minesAdded = 0;
 		int i,j;
 		Random rd = new Random();
@@ -22,8 +32,10 @@ public class GameBoard{
 			i = rd.nextInt(boardWidth);
 			j = rd.nextInt(boardHeight);
 
-			gameBoard[i][j] = -1;
-			minesAdded++;
+			if(gameBoard[i][j] != -1){
+				gameBoard[i][j] = -1;
+				minesAdded++;
+			}
 		}
 
 		for(i=0; i<boardWidth; i++){
@@ -34,11 +46,11 @@ public class GameBoard{
 	}
 
 	public int getHeight(){
-		return this.gameBoard[0].length;
+		return gameBoard[0].length;
 	}
 
 	public int getWidth(){
-		return this.gameBoard.length;
+		return gameBoard.length;
 	}
 
 
@@ -50,35 +62,30 @@ public class GameBoard{
 	 *
 	 */
 
-		int gameBoardWidth = this.getWidth();
-		int gameBoardHeight = this.getHeight();
-		
-		printEqualLine(2*horMargin+4*gameBoardWidth+2);
+		printEqualLine(2*horMargin+4*boardWidth+2);
 		System.out.print("\n");
 		for(int i=0; i<vertMargin; i++) System.out.print("\n");
 
 		printEmptyCharLine(1+horMargin);
-		for(int i=0; i<gameBoardWidth; i++){
+		for(int i=0; i<boardWidth; i++){
 			if(i<10){
-				System.out.print("  " + i + " ");
+				System.out.print(" ");
 			}
-			else{
-				System.out.print(" " + i + " ");
-			}
+			System.out.print(" " + i + " ");
 		}
 		printEmptyCharLine(horMargin);
 
 		for(int i=0; i<vertMargin; i++) System.out.print("\n");
 
-		for(int j=0; j<gameBoardHeight; j++){
+		for(int j=0; j<boardHeight; j++){
 			System.out.print(j);
 			printEmptyCharLine(horMargin-(j/10));
 			System.out.print("| ");
-			for(int i = 0; i<gameBoardWidth; i++){
-				if(this.playerBoard[i][j]==0){
+			for(int i = 0; i<boardWidth; i++){
+				if(playerBoard[i][j]==0){
 					System.out.print("?");
 				}
-				else if(this.playerBoard[i][j]==50){
+				else if(playerBoard[i][j]==50){
 					System.out.print(" ");
 				}
 				else{
@@ -129,10 +136,6 @@ public class GameBoard{
 	*/
 			int count = 0;
 
-			int boardWidth = this.getWidth();
-			int boardHeight = this.getHeight();
-
-			
 			for(int x=-1; x<2; x++){
 				for(int y=-1; y<2; y++){
 					if((i+x<0)||(j+y<0)){
@@ -150,7 +153,6 @@ public class GameBoard{
 		}
 
 	public boolean playerAction(){
-		Scanner sc = new Scanner(System.in);
 		int i;
 		do{
 			System.out.print(" Enter valid column number: ");
@@ -159,7 +161,7 @@ public class GameBoard{
  				sc.next();
 			}
 			i = sc.nextInt();
-		} while (i<0 || i >= this.getWidth());
+		} while (i<0 || i >= boardWidth);
 		
 		int j;
 		do{
@@ -169,14 +171,14 @@ public class GameBoard{
 				 sc.next();
 			}
 			j = sc.nextInt();
-		} while (j<0 || j >= this.getHeight());
+		} while (j<0 || j >= boardHeight);
 
 		if(this.gameBoard[i][j]==-1){
 			System.out.println("\nOh no! A mine!");
 			return false;
 		}
 
-		else if (this.gameBoard[i][j]==0){
+		else if (gameBoard[i][j]==0){
 			updateBoard(i,j);
 		}
 		else{
@@ -188,17 +190,9 @@ public class GameBoard{
 
 	public void updateBoard(int i, int j){
 		playerBoard[i][j]=50;
-		int boardWidth = this.getWidth();
-		int boardHeight = this.getHeight();
-		for(int x=-1; x<2; x++){
-			for(int y=-1; y<2; y++){
-				if((i+x<0)||(j+y<0)){
-						continue;
-					}
-					else if(i+x>=boardWidth||j+y>=boardHeight){
-						continue;
-					}
-				else{
+		for(int x=-1; x<=1; x++){
+			for(int y=-1; y<=1; y++){
+				if((i+x>=0)&&(j+y>=0)&&(i+x<boardWidth)&&(j+y<boardHeight)){
 					playerBoard[x+i][y+j]=gameBoard[x+i][y+j];
 					if(playerBoard[x+i][y+j]==0) playerBoard[x+i][y+j] = 50;
 				}
@@ -216,30 +210,25 @@ public class GameBoard{
 
 	public void victoryScreen(int horMargin, int vertMargin){
 	
-		int gameBoardWidth = this.getWidth();
-		int gameBoardHeight = this.getHeight();
-
-		printEqualLine(2*(2+horMargin)+4*gameBoardWidth);
+		printEqualLine(2*(2+horMargin)+4*boardWidth);
 		for(int i=0; i<vertMargin; i++) System.out.print("\n");
 
 		printEmptyCharLine(1+horMargin);
-		for(int i=0; i<gameBoardWidth; i++){
+		for(int i=0; i<boardWidth; i++){
 			if(i<10){
-				System.out.print("  " + i + " ");
+				System.out.print(" ");
 			}
-			else{
-				System.out.print(" " + i + " ");
-			}
+			System.out.print(" " + i + " ");
 		}
 		printEmptyCharLine(horMargin);
 
 		for(int i=0; i<vertMargin; i++) System.out.print("\n");
 
-		for(int j=0; j<gameBoardHeight; j++){
+		for(int j=0; j<boardHeight; j++){
 			System.out.print(j);
 			printEmptyCharLine(horMargin-(j/10));
 			System.out.print("| ");
-			for(int i = 0; i<gameBoardWidth; i++){
+			for(int i = 0; i<boardWidth; i++){
 				if(this.gameBoard[i][j]==0){
 					System.out.print(" ");
 				}
@@ -259,9 +248,9 @@ public class GameBoard{
 
 
 	public boolean gameWin(){
-		for (int i=0; i<this.getWidth(); i++){
-			for (int j = 0; j<this.getHeight(); j++){
-				if(this.playerBoard[i][j]==0 && this.gameBoard[i][j]!=-1){
+		for (int i=0; i<boardWidth; i++){
+			for (int j = 0; j<boardHeight; j++){
+				if(playerBoard[i][j]==0 && gameBoard[i][j]!=-1){
 					return true;
 				}
 			}

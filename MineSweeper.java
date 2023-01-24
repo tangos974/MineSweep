@@ -13,10 +13,10 @@ import java.util.*;
 
 public class MineSweeper {	
 
-	private static final int BOARD_WIDTH = 1;
-	private static final int BOARD_HEIGHT = 1;
+	private static final int BOARD_WIDTH = 20;
+	private static final int BOARD_HEIGHT = 20;
 	
-	private static final int NBR_MINES = 0;
+	private static final int NBR_MINES = 1;
 	
 	private static final int VERT_MARGIN = 2;
 	private static final int HOR_MARGIN = 2;
