@@ -52,8 +52,9 @@ public class GameBoard{
 
 		int gameBoardWidth = this.getWidth();
 		int gameBoardHeight = this.getHeight();
-
-		printEqualLine(2*horMargin+4*gameBoardWidth);
+		
+		printEqualLine(2*horMargin+4*gameBoardWidth+2);
+		System.out.print("\n");
 		for(int i=0; i<vertMargin; i++) System.out.print("\n");
 
 		printEmptyCharLine(1+horMargin);
@@ -182,7 +183,7 @@ public class GameBoard{
 			updateNeighbors(i,j);
 		}
 
-		return true;
+		return this.gameWin();
 	}
 
 	public void updateBoard(int i, int j){
@@ -221,7 +222,7 @@ public class GameBoard{
 		printEqualLine(2*(2+horMargin)+4*gameBoardWidth);
 		for(int i=0; i<vertMargin; i++) System.out.print("\n");
 
-		printEmptyCharLine(8);
+		printEmptyCharLine(1+horMargin);
 		for(int i=0; i<gameBoardWidth; i++){
 			if(i<10){
 				System.out.print("  " + i + " ");
@@ -235,7 +236,9 @@ public class GameBoard{
 		for(int i=0; i<vertMargin; i++) System.out.print("\n");
 
 		for(int j=0; j<gameBoardHeight; j++){
-			System.out.print(j+"\t"+"| ");
+			System.out.print(j);
+			printEmptyCharLine(horMargin-(j/10));
+			System.out.print("| ");
 			for(int i = 0; i<gameBoardWidth; i++){
 				if(this.gameBoard[i][j]==0){
 					System.out.print(" ");
@@ -251,7 +254,6 @@ public class GameBoard{
 			System.out.print("\n");
 		}
 		System.out.print("\n");
-		System.out.println("You Won!");
 		
 	}
 
@@ -260,11 +262,11 @@ public class GameBoard{
 		for (int i=0; i<this.getWidth(); i++){
 			for (int j = 0; j<this.getHeight(); j++){
 				if(this.playerBoard[i][j]==0 && this.gameBoard[i][j]!=-1){
-					return false;
+					return true;
 				}
 			}
 		}
-	return true;
+	return false;
 	}
 
 }	

@@ -13,10 +13,15 @@ import java.util.*;
 
 public class MineSweeper {	
 
-	private static final int BOARD_WIDTH = 7;
-	private static final int BOARD_HEIGHT = 12;
-	private static final int NBR_MINES = 10;
+	private static final int BOARD_WIDTH = 1;
+	private static final int BOARD_HEIGHT = 1;
 	
+	private static final int NBR_MINES = 0;
+	
+	private static final int VERT_MARGIN = 2;
+	private static final int HOR_MARGIN = 2;
+		
+
 	public static void main(String[] args){
 
 		
@@ -27,19 +32,24 @@ public class MineSweeper {
 
 	public void startGame(int mineNumber, int boardWidth, int boardHeight){
 
-		//GameBoard board = new GameBoard(boardWidth, boardHeight, mineNumber);
-		GameBoard board = new GameBoard();
+		GameBoard board = new GameBoard(boardWidth, boardHeight, mineNumber);
+		//GameBoard board = new GameBoard();
 
 		boolean inGame = true;
 		while(inGame){
-			board.drawMinesweepBoard(3, 2);
+			board.drawMinesweepBoard(HOR_MARGIN, VERT_MARGIN);
 			inGame = board.playerAction();
 
-			if(board.gameWin()){
-				board.victoryScreen(3, 2);
-				break;
-			}
 		}
+		if (board.gameWin()){
+			System.out.println("Game Over");
+		}
+		else{
+			System.out.println("You Win!");
+		}
+		board.victoryScreen(HOR_MARGIN, VERT_MARGIN);
+		
+		
 
 	}
 
